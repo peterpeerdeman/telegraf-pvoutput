@@ -1,0 +1,37 @@
+{
+  "name": "telegraf-pvoutput",
+  "author": "Peter Peerdeman",
+  "version": "1.0.0",
+  "description": "an external telegraf plugin that collects pvoutput.org data and writes it to influx line format",
+  "main": "telegraf-pvoutput.js",
+  "dependencies": {
+    "@rebelstack-io/line-proto-transformer": "^0.0.1",
+    "dotenv": "^10.0.0",
+    "moment": "^2.24.0",
+    "pvoutput": "github:peterpeerdeman/pvoutput#master"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "mocha": "^7.1.2",
+    "nock": "^11.7.0",
+    "proxyquire": "^2.1.3",
+    "sinon": "^8.1.1"
+  },
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/peterpeerdeman/telegraf-pvoutput.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/peterpeerdeman/telegraf-pvoutput/issues"
+  },
+  "homepage": "https://github.com/peterpeerdeman/telegraf-pvoutput#readme",
+  "engines": {
+    "node": ">=14.17.0",
+    "npm": ">=7.15.1"
+  }
+}
