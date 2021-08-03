@@ -33,10 +33,40 @@ npm install
 node telegraf-pvoutput.js
 ```
 
-## Telegraf & Docker usage
+## telegraf configuration with docker image plugin 
 
+telegraf.conf
+```sh
+[[inputs.exec]]
+  commands = [
+    "docker run --rm --env PVOUTPUT_APIKEY=xxxx --env PVOUTPUT_SYSTEMID=xxxxx --name telegraf-pvoutput peterpeerdeman/telegraf-pvoutput:0.0.1",
+  ]
+  timeout = "1h"
+  data_format = "influx"
+
+[[outputs.influxdb_v2]]
+  urls = ["http://influxdb2:8086"]
+  token = "$INFLUX_TOKEN"
+  organization = "org"
+  bucket = "bucket"
 ```
-# TODO
+
+## 
+docker-compose.yml
+```yaml
+version: '3.3'
+services:
+  telegraf:
+    volumes:
+    container_name: telegraf
+    restart: always
+    environment:
+      INFLUX_TOKEN: "xxxxx"
+    volumes:
+      - ~/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+      - ~/telegraf/docker:/usr/bin/docker
+      - /var/run/docker.sock:/var/run/docker.sock
+    image: telegraf:1.17.3-alpine
 ```
 
 ## Run tests
