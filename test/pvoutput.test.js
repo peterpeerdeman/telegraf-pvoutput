@@ -7,6 +7,9 @@ const Metrics = require('@rebelstack-io/line-proto-transformer');
 const sinon = require('sinon');
 const proxyquire = require('proxyquire').noCallThru();
 
+process.env.PVOUTPUT_APIKEY = 'xxxx';
+process.env.PVOUTPUT_SYSTEMID = 'xxxx';
+
 describe('telegraf-pvoutput tests', () => {
     it('Should call pushMetric with transformed pvoutput results', (done) => {
         const writeMetricStream = proxyquire('../lib/pvoutput.js', {
