@@ -42,7 +42,7 @@ describe('telegraf-pvoutput tests', () => {
                     voltage: 231.1,
                 },
                 measurement: 'pvstatus',
-                ts: 1627925400,
+                ts: 1627925400000000000,
             });
             done();
         });
