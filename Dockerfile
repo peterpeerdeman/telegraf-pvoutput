@@ -18,5 +18,7 @@ FROM arm64v8/node:16.13.2-alpine
 
 WORKDIR /app
 COPY --from=0 /app .
+
 COPY . .
-ENTRYPOINT ["node", "telegraf-pvoutput.js"]
+
+CMD node telegraf-pvoutput.js
