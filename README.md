@@ -1,7 +1,7 @@
 <h1 align="center">Welcome to telegraf-pvoutput 👋</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
-  <img src="https://img.shields.io/badge/node-%3E%3D14.17.0-blue.svg" />
+  <img src="https://img.shields.io/badge/node-%3E%3D16.3.2-blue.svg" />
   <img src="https://img.shields.io/badge/npm-%3E%3D7.15.1-blue.svg" />
   <a href="https://github.com/peterpeerdeman/telegraf-pvoutput#readme" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
@@ -21,7 +21,7 @@
 
 ## Prerequisites
 
-- node >=14.17.0
+- node >=16.3.2
 - npm >=7.15.1
 
 ## Standalone usage
@@ -35,38 +35,23 @@ node telegraf-pvoutput.js
 
 ## telegraf configuration with docker image plugin 
 
+be sure to [install telegraf natively](https://docs.influxdata.com/telegraf/v1.21/introduction/installation/) and not via docker, to be able to execute the docker calls from the following exec plugin config:
+
 telegraf.conf
 ```sh
 [[inputs.exec]]
   commands = [
-    "docker run --rm --env PVOUTPUT_APIKEY=xxxx --env PVOUTPUT_SYSTEMID=xxxxx --name telegraf-pvoutput peterpeerdeman/telegraf-pvoutput:0.0.1",
+    "docker run --user root:telegraf  --rm --env PVOUTPUT_APIKEY=xxxx --env PVOUTPUT_SYSTEMID=xxxxx --name telegraf-pvoutput peterpeerdeman/telegraf-pvoutput:0.0.1",
   ]
   timeout = "1h"
   data_format = "influx"
+  name_override = "pv"
 
 [[outputs.influxdb_v2]]
   urls = ["http://influxdb2:8086"]
   token = "$INFLUX_TOKEN"
   organization = "org"
   bucket = "bucket"
-```
-
-## 
-docker-compose.yml
-```yaml
-version: '3.3'
-services:
-  telegraf:
-    volumes:
-    container_name: telegraf
-    restart: always
-    environment:
-      INFLUX_TOKEN: "xxxxx"
-    volumes:
-      - ~/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
-      - ~/telegraf/docker:/usr/bin/docker
-      - /var/run/docker.sock:/var/run/docker.sock
-    image: telegraf:1.17.3-alpine
 ```
 
 ## Run tests
